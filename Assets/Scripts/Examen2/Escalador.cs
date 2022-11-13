@@ -36,9 +36,8 @@ public class Escalador : Agent
         }
         cube.transform.position = new Vector3(Random.Range(-2, 2), 1, Random.Range(-5, -1));
 
-        Debug.Log("EnpezandoEpisodio");
-        Debug.Log("contador" + contador);
         wall.transform.localScale = new Vector3(10, maximaAltura, 2);
+        this.transform.localPosition = new Vector3(0, 0.5f, -6);
     }
 
     public override void CollectObservations(VectorSensor sensor)
@@ -77,8 +76,8 @@ public class Escalador : Agent
         {
             SetReward(1f);
             contador++;
-            Debug.Log(contador);
-            if (contador >= 100)
+            Debug.Log("punto Ganado" + contador);
+            if (contador >= 30)
             {
                 if(maximaAltura < 10)
                 {
