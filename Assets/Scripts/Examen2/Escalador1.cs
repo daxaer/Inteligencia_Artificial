@@ -3,18 +3,20 @@ using Unity.MLAgents;
 using Unity.MLAgents.Sensors;
 using Unity.MLAgents.Actuators;
 
-public class Escalador : Agent
+public class Escalador1 : Agent
 {
     Rigidbody rigidBody;
-    public GameObject target;
-    public GameObject cube;
-    public GameObject wall;
+    public GameObject[] targets;
+    public Transform cube;
+    public Objetivo0 obj0;
+    public Objetivo1 obj1;
+    public Objetivo2 obj2;
+    public Objetivo3 obj3;
+    public Vector3 actualPos;
+    public int reward = 1;
     public float velocityMultiplier = 50.0f;
     public float jumpForce = 10.0f;
     public bool canJump;
-    public float maximaAltura = 0.01f;
-    public int contador;
-    public Objetivo1 objetivo1;
 
     void Start()
     {
@@ -24,6 +26,7 @@ public class Escalador : Agent
     private void Update()
     {
         CheckGround();
+        //Debug.Log("Recompensa: " + GetCumulativeReward());
     }
 
     public override void OnEpisodeBegin()
@@ -34,25 +37,32 @@ public class Escalador : Agent
             this.rigidBody.velocity = Vector3.zero;
             this.transform.localPosition = new Vector3(0, 0.5f, -6);
         }
-        cube.transform.position = new Vector3(Random.Range(-2, 2), 1, Random.Range(-5, -1));
 
-        Debug.Log("EnpezandoEpisodio");
-        Debug.Log("contador" + contador);
-        wall.transform.localScale = new Vector3(10, maximaAltura, 2);
+        cube.transform.position = new Vector3(Random.Range(-2, 2), 1, Random.Range(-5, -1));
+        actualPos = cube.transform.position;
+
+        reward = 1;
+        Debug.Log("BuscandoObjetivo");
     }
 
     public override void CollectObservations(VectorSensor sensor)
     {
-        // Know its position and the target's position
         sensor.AddObservation(this.transform.localPosition);
-        sensor.AddObservation(target.transform.position);
+        sensor.AddObservation(cube.localPosition);
+        sensor.AddObservation(targets[0].transform.position);
+        sensor.AddObservation(targets[1].transform.position);
+        sensor.AddObservation(targets[2].transform.position);
+        sensor.AddObservation(targets[3].transform.position);
+        sensor.AddObservation(obj0.transform.position);
+        sensor.AddObservation(obj1.transform.position);
+        sensor.AddObservation(obj2.transform.position);
+        sensor.AddObservation(obj3.transform.position);
 
-        // Observes its velocity in X and Y
+
+
         sensor.AddObservation(rigidBody.velocity.x);
-        sensor.AddObservation(rigidBody.velocity.z);
-
-        //jump
         sensor.AddObservation(rigidBody.velocity.y);
+        sensor.AddObservation(rigidBody.velocity.z);
     }
 
     public override void OnActionReceived(ActionBuffers actionBuffers)
@@ -66,35 +76,56 @@ public class Escalador : Agent
         signalController2.y = actionBuffers.ContinuousActions[0];
 
         rigidBody.AddForce(signalController * velocityMultiplier);
+        
 
+        // Policies
+
+        if (obj0.touchingAgent0 && reward == 1)
+        {
+            Debug.Log("Objetivo Alcanzado: " + reward);
+            SetReward(1.0f);
+            reward += 1;
+        }
+        if (obj1.touchingCube && reward == 2)
+        {
+            Debug.Log("Objetivo Alcanzado: " + reward);
+            SetReward(1.0f);
+            reward += 1;
+        }
+
+        if (obj2.touchingAgent && reward == 3)
+        {
+            Debug.Log("Objetivo Alcanzado: " + reward);
+            SetReward(2.0f);
+            reward += 1;
+        }
+
+        if (obj3.touchingAgent2 && reward == 4)
+        {
+            Debug.Log("Objetivo Alcanzado:" + reward);
+            SetReward(3.0f);
+        }
 
         if (canJump)
         {
             canJump = false;
             rigidBody.AddForce(signalController2 * jumpForce, ForceMode.Impulse);
         }
-        if (objetivo1.touchingCube)
-        {
-            SetReward(1f);
-            contador++;
-            Debug.Log(contador);
-            if (contador >= 100)
-            {
-                if(maximaAltura < 10)
-                {
-                    maximaAltura = maximaAltura + 0.05f;
-                    contador = 0;
-                }
-            }
-            objetivo1.touchingCube = false;
-            EndEpisode();
-        }
-        SetReward(-0.005f);
-        if (this.transform.localPosition.y < 0)
+
+        if (this.transform.localPosition.y < 0 || cube.transform.localPosition.y < 0)
         {
             SetReward(-2.0f);
             EndEpisode();
         }
+
+        if (actualPos.z < cube.transform.position.z )
+        {
+            SetReward(1f);
+            actualPos = cube.transform.position;
+            Debug.Log("Gane Recompensa:");
+        }
+
+        SetReward(-0.01f);
     }
 
     public void CheckGround()

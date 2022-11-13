@@ -8,7 +8,12 @@ public class Objetivo1 : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.transform.CompareTag("Cubo"))
+        if(other.transform.CompareTag("Agente"))
         touchingCube = true;
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.transform.CompareTag("Agente"))
+            touchingCube = false;
     }
 }
