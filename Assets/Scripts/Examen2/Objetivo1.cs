@@ -4,16 +4,16 @@ using UnityEngine;
 
 public class Objetivo1 : MonoBehaviour
 {
-    public bool touchingCube = false;
+    public bool touchingAgent = false;
 
     private void OnTriggerEnter(Collider other)
     {
         if(other.transform.CompareTag("Agente"))
-        touchingCube = true;
+        touchingAgent = true;
     }
     private void OnTriggerExit(Collider other)
     {
         if (other.transform.CompareTag("Agente"))
-            touchingCube = false;
+            touchingAgent = false;
     }
 }

@@ -86,7 +86,7 @@ public class Escalador1 : Agent
             SetReward(1.0f);
             reward += 1;
         }
-        if (obj1.touchingCube && reward == 2)
+        if (obj1.touchingAgent && reward == 2)
         {
             Debug.Log("Objetivo Alcanzado: " + reward);
             SetReward(1.0f);
