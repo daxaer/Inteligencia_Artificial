@@ -911,7 +911,7 @@ GameObject:
   - component: {fileID: 1330121852}
   - component: {fileID: 1330121851}
   m_Layer: 0
-  m_Name: Objetivo1 (1)
+  m_Name: Objetivo0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1186,8 +1186,8 @@ MonoBehaviour:
     maxStep: 0
   hasUpgradedFromAgentParameters: 1
   MaxStep: 0
-  target1: {fileID: 0}
-  target2: {fileID: 0}
+  target1: {fileID: 1330121849}
+  target2: {fileID: 95564209}
   cube: {fileID: 937586047}
   wall: {fileID: 1026545257}
   velocityMultiplier: 50
@@ -1195,8 +1195,8 @@ MonoBehaviour:
   canJump: 0
   maximaAltura: -2.1
   contador: 0
-  obj0: {fileID: 0}
-  obj1: {fileID: 0}
+  obj0: {fileID: 1330121851}
+  obj1: {fileID: 95564215}
 --- !u!1 &1896979406
 GameObject:
   m_ObjectHideFlags: 0
