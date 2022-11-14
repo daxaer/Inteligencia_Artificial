@@ -7,19 +7,13 @@ public class Escalador : Agent
 {
     Rigidbody rigidBody;
     Rigidbody rCube;
-    public GameObject target1;
-    public GameObject target2;
     public GameObject cube;
     public GameObject wall;
     public float velocityMultiplier = 50.0f;
     public float jumpForce = 10.0f;
     public bool canJump;
-    public float maximaAltura = -2.1f;
-    public int contador;
-    public Objetivo0 obj0;
     public Objetivo1 obj1;
     bool puntocubo;
-    bool Target1check;
 
     void Start()
     {
@@ -46,16 +40,14 @@ public class Escalador : Agent
 
         this.transform.localPosition = new Vector3(0, 0.5f, -6);
         puntocubo = false;
-        Target1check = false;
     }
 
     public override void CollectObservations(VectorSensor sensor)
     {
         // Know its position and the target's position
         sensor.AddObservation(this.transform.localPosition);
-        sensor.AddObservation(target1.transform.localPosition);
-        sensor.AddObservation(target2.transform.localPosition);
         sensor.AddObservation(cube.transform.localPosition) ;
+        sensor.AddObservation(obj1);
 
         // Observes its velocity in X and Y
         sensor.AddObservation(rigidBody.velocity.x);
@@ -77,24 +69,24 @@ public class Escalador : Agent
 
         rigidBody.AddForce(signalController * velocityMultiplier);
 
-
         if (canJump)
         {
             canJump = false;
             rigidBody.AddForce(signalController2 * jumpForce, ForceMode.Impulse);
         }
 
-        if (obj0.touchingAgent0 && puntocubo == true)
-        {
-            SetReward(1f);
-            obj0.touchingAgent0 = false;
-            Target1check = true;
-        }
 
-        if (obj1.touchingAgent && Target1check == true)
+        if (obj1.touchingAgent && puntocubo == true)
         {
             SetReward(1f);
-            obj0.touchingAgent0 = false;
+            obj1.touchingAgent = false;
+            Debug.Log("punto 1");
+            EndEpisode();
+        }
+        else if(obj1.touchingAgent && puntocubo == false)
+        {
+            obj1.touchingAgent = false;
+            SetReward(-1f);
             EndEpisode();
         }
 
