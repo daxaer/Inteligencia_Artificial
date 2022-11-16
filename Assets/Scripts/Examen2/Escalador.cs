@@ -46,7 +46,7 @@ public class Escalador : Agent
     {
         // Know its position and the target's position
         sensor.AddObservation(this.transform.localPosition);
-        sensor.AddObservation(cube.transform.localPosition) ;
+        sensor.AddObservation(cube.transform.localPosition);
         sensor.AddObservation(obj1);
 
         // Observes its velocity in X and Y
