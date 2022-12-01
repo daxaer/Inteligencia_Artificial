@@ -4,21 +4,22 @@ using UnityEngine;
 
 public class MoverObjetivo : MonoBehaviour
 {
+    float random;
     private void Start()
     {
         Mover();
     }
-    float random;
-    private void OnTriggerEnter(Collider other)
+    private void OnCollisionEnter(Collision collision)
     {
-        random = Random.Range(-5,5);
-        if(other.CompareTag("Pared"))
+        Debug.Log("Collicion pared");
+        if (collision.collider.CompareTag("Pared"))
         {
             Mover();
         }
     }
     public void Mover()
     {
+        random = Random.Range(-5, 5);
         transform.localPosition = new Vector3(random, 0.02f, random);
     }
 }
