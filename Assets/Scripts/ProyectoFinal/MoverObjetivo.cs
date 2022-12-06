@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class MoverObjetivo : MonoBehaviour
 {
-    float random;
     private void Start()
     {
         Mover();
@@ -19,7 +18,8 @@ public class MoverObjetivo : MonoBehaviour
     }
     public void Mover()
     {
-        random = Random.Range(-5, 5);
-        transform.localPosition = new Vector3(random, 0.02f, random);
+        float random = Random.Range(-4, 4);
+        float random2 = Random.Range(-4, 4);
+        transform.localPosition = new Vector3(random, 0.02f, random2);
     }
 }

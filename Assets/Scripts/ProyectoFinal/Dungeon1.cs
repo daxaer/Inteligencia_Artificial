@@ -174,3 +174,96 @@ public class Dungeon1 : Agent
         }
     }
 }
+
+    //public float velocidad;
+    //private Rigidbody rb;
+    //public bool jugadorDetectado;
+    //public GameObject player;
+    //public GameObject objetivo;
+    //public GameObject Espada;
+    //public Transform posicionInicial;
+
+    //public void Start()
+    //{
+    //    rb = GetComponent<Rigidbody>();
+    //}
+    //public override void OnEpisodeBegin()
+    //{
+    //    jugadorDetectado = false;
+    //    this.transform.localPosition = posicionInicial.transform.localPosition;
+    //    player.GetComponent<Player>().MoverSpawn();
+    //    objetivo.GetComponent<MoverObjetivo>().Mover();
+    //}
+    //public override void CollectObservations(VectorSensor sensor)
+    //{
+    //    sensor.AddObservation(player);
+    //    sensor.AddObservation(objetivo);
+    //    sensor.AddObservation(jugadorDetectado);
+    //    sensor.AddObservation(player.transform.position);
+    //    sensor.AddObservation(Vector3.Distance(objetivo.transform.localPosition, transform.localPosition));
+    //    sensor.AddObservation(Vector3.Distance(player.transform.localPosition, transform.localPosition));
+    //    sensor.AddObservation(Vector3.Distance(Espada.transform.localPosition, transform.localPosition));
+    //    sensor.AddObservation((objetivo.transform.localPosition - transform.localPosition).normalized);
+    //    sensor.AddObservation((player.transform.localPosition - transform.localPosition).normalized);
+    //    sensor.AddObservation(transform.forward);
+
+    //}
+    //public override void OnActionReceived(ActionBuffers actionBuffers)
+    //{
+    //    Vector3 signalController = Vector3.zero;
+
+    //    signalController.x = actionBuffers.ContinuousActions[0];
+    //    signalController.z = actionBuffers.ContinuousActions[1];
+
+    //    rb.AddForce(signalController * velocidad);
+
+    //    float distanciaPlayer = Vector3.Distance(this.transform.localPosition, player.transform.localPosition);
+
+    //    if(distanciaPlayer < 2)
+    //    {
+    //        jugadorDetectado = true;
+    //    }
+    //    if(GetCumulativeReward() < -10)
+    //    {
+    //        EndEpisode();
+    //    }
+    //    if (GetCumulativeReward() > 3)
+    //    {
+    //        EndEpisode();
+    //    }
+    //    if(transform.localPosition.y < -1)
+    //    {
+    //        EndEpisode();
+    //    }
+    //}
+
+    //private void OnCollisionEnter(Collision collision)
+    //{
+    //    if (collision.collider.CompareTag("Pared"))
+    //    {
+    //        AddReward(-0.1f);
+    //    }
+    //}
+    //private void OnTriggerEnter(Collider other)
+    //{
+    //    if(other.CompareTag("Espada"))
+    //    {
+    //        Debug.Log("agente inpactado");
+    //        AddReward(-0.2f);
+    //        EndEpisode();
+    //    }
+    //    if (other.CompareTag("Objetivo") /*&& !jugadorDetectado*/)
+    //    {
+    //        Debug.Log("objetivo inpactado");
+    //        AddReward(0.2f);
+    //        other.GetComponent<MoverObjetivo>().Mover();
+    //    }
+    //    if (other.CompareTag("Player"))
+    //    {
+    //        Debug.Log("jugador inpactado");
+    //        AddReward(1f);
+    //        other.GetComponent<Player>().MoverSpawn();
+    //    }
+    //}
+
+
